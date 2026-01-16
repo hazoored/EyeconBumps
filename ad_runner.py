@@ -266,7 +266,7 @@ class AdRunner:
         source_msg_id = campaign['source_message_id']
         topic_keyword = campaign['target_topic_keyword']
         session_string = campaign['session_string'] # Get session string
-        campaign_group = campaign['campaign_group_id'] # Get group (e.g. 'Eyecon', 'Khan')
+        campaign_group = campaign['group_name'] # Get group (e.g. 'Eyecon', 'Khan')
         
         if not source_chat_id or not source_msg_id:
             logger.error(f"Campaign {campaign['name']} missing source info.")
