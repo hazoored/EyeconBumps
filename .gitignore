@@ -1,0 +1,8 @@
+.env
+*.session
+__pycache__
+*.log
+data/
+venv/
+*.zip
+.DS_Store

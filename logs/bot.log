@@ -1,0 +1,128 @@
+2026-01-14 20:04:46 | INFO     | __main__:on_ready:55 - Slash commands synced to guild ID: 1454150964968820816
+2026-01-14 20:04:46 | INFO     | telegram_manager:start:60 - Connecting to Default Telegram Account (timeout=30s)...
+2026-01-14 20:05:16 | WARNING  | telegram_manager:start:70 - Could not connect to Telegram: Request timed out (30s).
+2026-01-14 20:05:16 | INFO     | ad_runner:start:19 - AdRunner started.
+2026-01-14 20:05:16 | INFO     | __main__:on_ready:63 - Logged in as EyeconBumps#9705 (ID: 1456615741494136957)
+2026-01-14 20:05:16 | INFO     | __main__:on_ready:64 - AdRunner started and slash commands synced
+2026-01-14 20:05:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:05:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:05:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:05:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:06:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:06:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:06:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:06:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:07:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:07:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:07:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:07:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:08:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:08:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:08:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:08:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:09:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:09:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:09:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:09:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:10:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:10:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:10:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:10:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:11:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:11:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:11:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:11:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:12:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:12:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:12:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:12:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:13:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:13:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:13:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:13:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:14:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:14:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:14:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:14:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:15:16 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:15:16 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:15:16 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:15:16 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:15:51 | INFO     | __main__:on_ready:55 - Slash commands synced to guild ID: 1454150964968820816
+2026-01-14 20:15:51 | INFO     | telegram_manager:start:60 - Connecting to Default Telegram Account (timeout=30s)...
+2026-01-14 20:16:21 | WARNING  | telegram_manager:start:70 - Could not connect to Telegram: Request timed out (30s).
+2026-01-14 20:16:21 | INFO     | ad_runner:start:19 - AdRunner started.
+2026-01-14 20:16:21 | INFO     | __main__:on_ready:63 - Logged in as EyeconBumps#9705 (ID: 1456615741494136957)
+2026-01-14 20:16:21 | INFO     | __main__:on_ready:64 - AdRunner started and slash commands synced
+2026-01-14 20:16:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:16:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:16:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:16:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:17:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:17:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:17:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:17:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:18:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:18:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:18:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:18:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:19:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:19:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:19:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:19:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:20:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:20:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:20:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:20:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:21:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:21:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:21:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:21:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:22:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:22:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:22:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:22:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:23:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:23:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:23:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:23:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:24:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:24:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:24:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:24:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:25:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:25:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:25:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:25:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:26:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:26:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:26:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:26:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:27:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:27:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:27:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:27:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:28:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:28:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:28:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:28:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:29:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:29:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:29:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:29:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:30:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:30:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:30:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:30:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:31:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:31:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:31:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:31:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:32:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:32:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:32:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:32:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
+2026-01-14 20:33:21 | INFO     | ad_runner:loop:34 - --- Starting Campaign Check Loop ---
+2026-01-14 20:33:21 | INFO     | ad_runner:process_campaigns:47 - Found 0 active campaigns.
+2026-01-14 20:33:21 | INFO     | ad_runner:loop:36 - --- Finished Campaign Check Loop ---
+2026-01-14 20:33:21 | INFO     | ad_runner:loop:40 - Sleeping for 60s...
