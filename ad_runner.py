@@ -69,13 +69,16 @@ class AdRunner:
         # 3. Send Request
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         try:
+            logger.info(f"📤 Sending Rich Log for group '{campaign_group}' to {channel_id} using token suffix ...{bot_token[-5:]}")
             session = await self.get_http_session()
             async with session.post(url, json=payload) as resp:
                 if resp.status != 200:
                     err_text = await resp.text()
-                    logger.warning(f"Failed to send rich log: {resp.status} - {err_text}")
+                    logger.warning(f"❌ Failed to send rich log: {resp.status} - {err_text}")
+                else:
+                    logger.info(f"✅ Rich Log sent successfully to {channel_id}")
         except Exception as e:
-            logger.error(f"Error sending rich log: {e}")
+            logger.error(f"❌ Error sending rich log: {e}")
 
     async def start(self):
         self.running = True
