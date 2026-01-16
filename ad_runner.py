@@ -164,8 +164,7 @@ class AdRunner:
             # Stagger wrapper
             async def staggered_run(coro, delay):
                 await asyncio.sleep(delay)
-                # Create a task so it runs in background and doesn't block other stagger checks
-                asyncio.create_task(coro)
+                await coro
 
             for i, task_coro in enumerate(tasks):
                 # Randomized delay for staggering
@@ -210,7 +209,7 @@ class AdRunner:
                 return
             
             logger.info(f"<blue>Group {group_name}: Starting ad run for {candidate['name']}...</blue>")
-            return self.run_and_update(candidate, now)
+            await self.run_and_update(candidate, now)
         else:
             wait_time = max(STRICT_INTERVAL - time_since_last_run, group_interval - time_since_any_run)
             logger.info(f"Group {group_name}: No account ready. Next run in approx {wait_time:.1f}s")
@@ -250,7 +249,7 @@ class AdRunner:
                 return
                 
             logger.info(f"<blue>Starting standalone ad for {c_name}...</blue>")
-            return self.run_and_update(row, now)
+            await self.run_and_update(row, now)
         else:
             logger.info(f"Standalone {c_name}: Waiting {STRICT_INTERVAL - time_diff:.1f}s")
 
