@@ -67,6 +67,9 @@ async def add_campaign(name, status, owner_id, bot_token, bot_username, bot_id, 
         await db.commit()
 
 async def update_campaign_last_run(name, last_run_at):
+    # Ensure last_run_at is a string for consistent storage
+    if hasattr(last_run_at, 'isoformat'):
+        last_run_at = last_run_at.isoformat()
     async with aiosqlite.connect(DB_PATH) as db:
         await db.execute('UPDATE campaigns SET last_run_at = ? WHERE name = ?', (last_run_at, name))
         await db.commit()

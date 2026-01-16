@@ -21,6 +21,7 @@ class AdRunner:
         self.tg_manager = telegram_manager
         self.discord_client = discord_client
         self.http_session = None # For log bots
+        self._active_tasks = set() # Track campaign names currently running
 
     async def get_http_session(self):
         if self.http_session is None or self.http_session.closed:
@@ -163,18 +164,18 @@ class AdRunner:
             # Stagger wrapper
             async def staggered_run(coro, delay):
                 await asyncio.sleep(delay)
-                await coro
+                # Create a task so it runs in background and doesn't block other stagger checks
+                asyncio.create_task(coro)
 
-            staggered_tasks = []
             for i, task_coro in enumerate(tasks):
                 # Randomized delay for staggering
-                # Base is i * CAMPAIGN_STAGGER_DELAY
-                # Add/Subtract random jitter
                 base_delay = i * CAMPAIGN_STAGGER_DELAY
                 jittered_delay = base_delay + random.uniform(0, CAMPAIGN_STAGGER_DELAY)
-                staggered_tasks.append(staggered_run(task_coro, jittered_delay))
+                
+                # We DON'T gather. We just launch the staggered launch task.
+                asyncio.create_task(staggered_run(task_coro, jittered_delay))
 
-            await asyncio.gather(*staggered_tasks)
+            logger.info("Background tasks launched. Returning to monitor loop.")
 
     async def process_group(self, group_name, members, now):
         logger.info(f"Processing Group: {group_name} ({len(members)} accounts)")
@@ -204,8 +205,12 @@ class AdRunner:
         logger.info(f"Group {group_name}: Candidate {candidate['name']} last ran {time_since_last_run:.1f}s ago. Member gap: {time_since_any_run:.1f}s (Required: {group_interval:.1f}s)")
 
         if time_since_last_run >= STRICT_INTERVAL and time_since_any_run >= group_interval:
-            logger.info(f"<blue>Group {group_name}: Running ad for {candidate['name']}...</blue>")
-            await self.run_and_update(candidate, now)
+            if candidate['name'] in self._active_tasks:
+                logger.info(f"Group {group_name}: Candidate {candidate['name']} is already running. Skipping.")
+                return
+            
+            logger.info(f"<blue>Group {group_name}: Starting ad run for {candidate['name']}...</blue>")
+            return self.run_and_update(candidate, now)
         else:
             wait_time = max(STRICT_INTERVAL - time_since_last_run, group_interval - time_since_any_run)
             logger.info(f"Group {group_name}: No account ready. Next run in approx {wait_time:.1f}s")
@@ -240,8 +245,12 @@ class AdRunner:
         logger.info(f"Standalone {c_name}: Last run {time_diff:.1f}s ago (Required: {STRICT_INTERVAL}s)")
 
         if time_diff >= STRICT_INTERVAL:
-            logger.info(f"<blue>Running standalone ad for {c_name}...</blue>")
-            await self.run_and_update(row, now)
+            if c_name in self._active_tasks:
+                logger.info(f"Standalone {c_name} already running. Skipping.")
+                return
+                
+            logger.info(f"<blue>Starting standalone ad for {c_name}...</blue>")
+            return self.run_and_update(row, now)
         else:
             logger.info(f"Standalone {c_name}: Waiting {STRICT_INTERVAL - time_diff:.1f}s")
 
@@ -261,8 +270,19 @@ class AdRunner:
         return datetime.datetime.min
 
     async def run_and_update(self, campaign, now):
-        await self.run_ad(campaign)
-        await update_campaign_last_run(campaign['name'], now)
+        c_name = campaign['name']
+        self._active_tasks.add(c_name)
+        try:
+            # UPDATE LAST RUN AT THE START - Prevents burst firing on bot restart
+            logger.info(f"Updating persistence for {c_name} to prevent multi-start.")
+            await update_campaign_last_run(c_name, now)
+            
+            await self.run_ad(campaign)
+        except Exception as e:
+            logger.error(f"Error executing campaign {c_name}: {e}")
+        finally:
+            self._active_tasks.discard(c_name)
+            logger.info(f"Completed run and released lock for {c_name}")
 
     async def notify_owner_errors(self, campaign, error_reports):
         if not self.discord_client or not error_reports:
