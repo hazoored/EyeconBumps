@@ -78,7 +78,8 @@ DEVICE_MODELS = [
 # Rich Log Bot Configuration
 # Maps Campaign Group Names -> (Bot Token, Log Channel ID)
 # IMPORTANT: Replace 'REPLACE_WITH_CHANNEL_ID' with the actual destination channel ID (e.g., -10012345678)
-RICH_LOG_BOT_CONFIG = {
+# You can also provide a list of IDs for multiple recipients, e.g., 'channel_id': ['ID1', 'ID2']
+LOG_STRATEGY = {
     'Eyecon': {
         'token': '8237137634:AAFCcUxQorR3kP0bpZTlGFLSvrNBzq1bxAU',
         'channel_id': '6926297956' 
@@ -93,7 +94,7 @@ RICH_LOG_BOT_CONFIG = {
     },
     'Wizard': {
         'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
-        'channel_id': '6926297956'
+        'channel_id': ''
     },
      # catch-all default
     'DEFAULT': {

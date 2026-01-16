@@ -38,16 +38,10 @@ class AdRunner:
         bot_token = strategy['token']
         channel_id = strategy['channel_id']
 
+        # Support multiple channel IDs if provided as a list
+        target_ids = channel_id if isinstance(channel_id, (list, tuple)) else [channel_id]
+
         # 2. Construct Payload
-        # Format:
-        # Forwarded from [Bot Name]
-        # ✅ Successfully forwarded to: [Target Group]
-        # [Card with Content]
-        # [View Message Button]
-        
-        # We need to escape Markdown properly if used, or use HTML. Using HTML for safety.
-        # Minimal data for the card.
-        
         text = (
             f"✅ <b>Successfully forwarded to:</b> {target_group_name}\n"
             f"<b>Account:</b> {account_name}\n\n"
@@ -55,7 +49,6 @@ class AdRunner:
         )
 
         payload = {
-            "chat_id": channel_id,
             "text": text,
             "parse_mode": "HTML",
             "disable_web_page_preview": True,
@@ -66,19 +59,30 @@ class AdRunner:
             }
         }
 
-        # 3. Send Request
+        # 3. Send Requests
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         try:
-            logger.info(f"📤 Sending Rich Log for group '{campaign_group}' to {channel_id} using token suffix ...{bot_token[-5:]}")
             session = await self.get_http_session()
-            async with session.post(url, json=payload) as resp:
-                if resp.status != 200:
-                    err_text = await resp.text()
-                    logger.warning(f"❌ Failed to send rich log: {resp.status} - {err_text}")
-                else:
-                    logger.info(f"✅ Rich Log sent successfully to {channel_id}")
+            for tid in target_ids:
+                if tid == 'REPLACE_WITH_CHANNEL_ID' or not tid:
+                    continue
+                
+                try:
+                    logger.info(f"📤 Sending Rich Log for group '{campaign_group}' to {tid}")
+                    current_payload = payload.copy()
+                    current_payload["chat_id"] = tid
+                    
+                    async with session.post(url, json=current_payload) as resp:
+                        if resp.status != 200:
+                            err_text = await resp.text()
+                            logger.warning(f"❌ Failed to send rich log to {tid}: {resp.status} - {err_text}")
+                        else:
+                            logger.info(f"✅ Rich Log sent successfully to {tid}")
+                except Exception as inner_e:
+                    logger.error(f"❌ Error sending rich log to {tid}: {inner_e}")
+                    
         except Exception as e:
-            logger.error(f"❌ Error sending rich log: {e}")
+            logger.error(f"❌ Error in send_rich_log loop: {e}")
 
     async def start(self):
         self.running = True
