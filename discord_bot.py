@@ -58,6 +58,10 @@ async def on_ready():
         logger.info('Slash commands synced globally')
 
     await tg_manager.start()
+    await ad_runner.start()
+
+    logger.info(f'Logged in as {client.user} (ID: {client.user.id})')
+    logger.info('AdRunner started and slash commands synced')
 
 @tree.command(name="sync", description="Force sync slash commands to Discord.")
 async def sync_commands(interaction: discord.Interaction):
@@ -80,10 +84,6 @@ async def sync_commands(interaction: discord.Interaction):
     except Exception as e:
         await interaction.followup.send(f"❌ Sync failed: {e}")
         logger.error(f"Manual sync failed: {e}")
-    await ad_runner.start()
-
-    logger.info(f'Logged in as {client.user} (ID: {client.user.id})')
-    logger.info('AdRunner started and slash commands synced')
 
 @tree.command(name="ping", description="Check if the bot is alive")
 async def ping(interaction: discord.Interaction):
