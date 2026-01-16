@@ -425,9 +425,9 @@ class TelegramManager:
                          slug=chatlist_hash
                      ))
                  except Exception as leave_err:
-                     logger.warning(f"Failed to remove existing folder (maybe it was manual?): {leave_err}")
-                     # If we fail to leave, we might still be able to just return "Success" or try joining anyway
-                     return "Already joined (Replacement failed)"
+                     logger.warning(f"Failed to remove existing folder: {leave_err}")
+                     # Return the actual error to help debugging
+                     return f"Already joined (Replacement failed: {str(leave_err)})"
 
             # 2. Join the invite
             # We need to provide the peers that are in the folder
