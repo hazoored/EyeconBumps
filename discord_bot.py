@@ -149,63 +149,63 @@ class CampaignSetupModal(discord.ui.Modal, title='Create New Ad Campaign'):
         )
 
 
-    @tree.command(name="updategroups", description="Auto-fetch Telegram Groups, update Config, and Push to GitHub.")
-    @app_commands.describe(folder="The Telegram Folder name to scan (Default: 'Marketplaces')")
-    async def updategroups(self, interaction: discord.Interaction, folder: str = "Marketplaces"):
-        # Check permissions (Owner only)
-        # Assuming permissions are handled by role or generic check, but for safety adding ID check
-        if interaction.user.id != 6926297956 and interaction.user.id != int(os.getenv('DISCORD_OWNER_ID', 0)):
-             if not interaction.user.guild_permissions.administrator:
-                await interaction.response.send_message("❌ Access Denied.", ephemeral=True)
-                return
+@tree.command(name="updategroups", description="Auto-fetch Telegram Groups, update Config, and Push to GitHub.")
+@app_commands.describe(folder="The Telegram Folder name to scan (Default: 'Marketplaces')")
+async def updategroups(interaction: discord.Interaction, folder: str = "Marketplaces"):
+    # Check permissions (Owner only)
+    # Assuming permissions are handled by role or generic check, but for safety adding ID check
+    if interaction.user.id != 6926297956 and interaction.user.id != int(os.getenv('DISCORD_OWNER_ID', 0)):
+         if not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message("❌ Access Denied.", ephemeral=True)
+            return
 
-        await interaction.response.defer(ephemeral=False)
-        await interaction.followup.send(f"🔄 **Updating Groups...**\nScanning folder: `{folder}`\n_This may take a few seconds..._")
+    await interaction.response.defer(ephemeral=False)
+    await interaction.followup.send(f"🔄 **Updating Groups...**\nScanning folder: `{folder}`\n_This may take a few seconds..._")
 
-        try:
-            # 1. Run the Python Script
-            script_path = "tools/setup/get_group_info.py"
-            # Use sys.executable to ensure we use the same python env
-            cmd = [sys.executable, script_path, "--folder", folder, "--write"]
-            
-            logger.info(f"Running command: {cmd}")
-            
-            proc = await asyncio.create_subprocess_exec(
-                *cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
-            )
-            stdout, stderr = await proc.communicate()
-            
-            if proc.returncode != 0:
-                err_msg = stderr.decode().strip() or stdout.decode().strip()
-                await interaction.followup.send(f"❌ **Script Failed**\n```\n{err_msg[-1900:]}\n```")
-                return
+    try:
+        # 1. Run the Python Script
+        script_path = "tools/setup/get_group_info.py"
+        # Use sys.executable to ensure we use the same python env
+        cmd = [sys.executable, script_path, "--folder", folder, "--write"]
+        
+        logger.info(f"Running command: {cmd}")
+        
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await proc.communicate()
+        
+        if proc.returncode != 0:
+            err_msg = stderr.decode().strip() or stdout.decode().strip()
+            await interaction.followup.send(f"❌ **Script Failed**\n```\n{err_msg[-1900:]}\n```")
+            return
 
-            await interaction.followup.send("✅ **Config Updated Locally.**\nPushing to GitHub...")
+        await interaction.followup.send("✅ **Config Updated Locally.**\nPushing to GitHub...")
 
-            # 2. Git Push
-            push_cmd = "git add config.py && git commit -m 'Config: Auto-Update Groups via Discord' && git push origin main"
-            
-            proc_git = await asyncio.create_subprocess_shell(
-                push_cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
-            )
-            stdout_git, stderr_git = await proc_git.communicate()
+        # 2. Git Push
+        push_cmd = "git add config.py && git commit -m 'Config: Auto-Update Groups via Discord' && git push origin main"
+        
+        proc_git = await asyncio.create_subprocess_shell(
+            push_cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout_git, stderr_git = await proc_git.communicate()
 
-            if proc_git.returncode != 0:
-                err_git = stderr_git.decode().strip()
-                if "nothing to commit" in stdout_git.decode():
-                     await interaction.followup.send("✅ **Already Up-to-Date!** (No changes detected).")
-                else:
-                     await interaction.followup.send(f"⚠️ **Git Push Failed**\n```\n{err_git[-1900:]}\n```")
+        if proc_git.returncode != 0:
+            err_git = stderr_git.decode().strip()
+            if "nothing to commit" in stdout_git.decode():
+                 await interaction.followup.send("✅ **Already Up-to-Date!** (No changes detected).")
             else:
-                await interaction.followup.send("🚀 **Success!**\nGroups updated and pushed to GitHub.\n*Restart the server to apply changes.*")
+                 await interaction.followup.send(f"⚠️ **Git Push Failed**\n```\n{err_git[-1900:]}\n```")
+        else:
+            await interaction.followup.send("🚀 **Success!**\nGroups updated and pushed to GitHub.\n*Restart the server to apply changes.*")
 
-        except Exception as e:
-            logger.error(f"Update Groups Error: {e}")
-            await interaction.followup.send(f"❌ **Internal Error**: {str(e)}")
+    except Exception as e:
+        logger.error(f"Update Groups Error: {e}")
+        await interaction.followup.send(f"❌ **Internal Error**: {str(e)}")
 
 @tree.command(name="createad", description="Start a new ad campaign")
 @app_commands.describe(
