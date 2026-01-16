@@ -62,6 +62,10 @@ AD_SKIP_DELAY_MAX = 7
 # This prevents all accounts from waking up at the exact same second.
 CAMPAIGN_STAGGER_DELAY = 5
 
+# Maximum random jitter (in seconds) applied to the very first bot wake-up.
+# This prevents all bots from starting exactly at the same time on server reboot.
+STARTUP_JITTER_MAX = 60
+
 # Telemetry Spoofing: List of device models to rotate through safely.
 # Each session will be deterministically assigned one of these based on its hash.
 DEVICE_MODELS = [

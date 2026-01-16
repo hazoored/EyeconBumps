@@ -6,7 +6,8 @@ from config import (
     GROUPS_CONFIG, ALIASES, OTHER, 
     AD_FORWARD_DELAY_MIN, AD_FORWARD_DELAY_MAX, 
     AD_SKIP_DELAY_MIN, AD_SKIP_DELAY_MAX,
-    CAMPAIGN_STAGGER_DELAY, LOG_STRATEGY
+    CAMPAIGN_STAGGER_DELAY, LOG_STRATEGY,
+    STARTUP_JITTER_MAX
 )
 from database import get_active_campaigns, update_campaign_status, update_campaign_last_run
 import datetime
@@ -100,8 +101,15 @@ class AdRunner:
         logger.info("AdRunner stopped.")
 
     async def loop(self):
+        first_run = True
         while self.running:
             try:
+                if first_run:
+                    jitter = random.randint(0, STARTUP_JITTER_MAX)
+                    logger.info(f"Applying startup jitter: Waiting {jitter}s before first run...")
+                    await asyncio.sleep(jitter)
+                    first_run = False
+
                 logger.info("--- Starting Campaign Check Loop ---")
                 await self.process_campaigns()
                 logger.info("--- Finished Campaign Check Loop ---")
@@ -159,8 +167,12 @@ class AdRunner:
 
             staggered_tasks = []
             for i, task_coro in enumerate(tasks):
-                # Delay = index * CAMPAIGN_STAGGER_DELAY
-                staggered_tasks.append(staggered_run(task_coro, i * CAMPAIGN_STAGGER_DELAY))
+                # Randomized delay for staggering
+                # Base is i * CAMPAIGN_STAGGER_DELAY
+                # Add/Subtract random jitter
+                base_delay = i * CAMPAIGN_STAGGER_DELAY
+                jittered_delay = base_delay + random.uniform(0, CAMPAIGN_STAGGER_DELAY)
+                staggered_tasks.append(staggered_run(task_coro, jittered_delay))
 
             await asyncio.gather(*staggered_tasks)
 
@@ -281,12 +293,15 @@ class AdRunner:
         
         logger.info(f"Source: Chat={source_chat_id}, Msg={source_msg_id}, TopicKeyword='{topic_keyword}' -> Normalized='{normalized_topic}'")
         
-        # Iterate configured groups
-        logger.info(f"Checking {len(GROUPS_CONFIG)} groups for potential forwarding...")
+        # Iterate configured groups - SHUFFLED for each run to avoid overlap
+        target_groups = list(GROUPS_CONFIG.items())
+        random.shuffle(target_groups)
+        
+        logger.info(f"Checking {len(target_groups)} groups for potential forwarding (Randomized Order)...")
         
         failed_groups = []
         
-        for group_id, topic_ids in GROUPS_CONFIG.items():
+        for group_id, topic_ids in target_groups:
             target_topic_id = None
             should_send = False
             used_topic_name = "None (Simple Group)"
