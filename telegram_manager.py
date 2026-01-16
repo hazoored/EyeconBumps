@@ -251,10 +251,39 @@ class TelegramManager:
                  await asyncio.sleep(typing_duration)
             
              # Use generic Raw API Request
-             await client(functions.messages.ForwardMessagesRequest(**request_kwargs))
+             result = await client(functions.messages.ForwardMessagesRequest(**request_kwargs))
+
+             # Result is Updates object. Extract ID to build link.
+             new_msg_id = None
+             if hasattr(result, 'updates'):
+                 for u in result.updates:
+                     if isinstance(u, types.UpdateMessageID):
+                         new_msg_id = u.id
+                         break
+                     if isinstance(u, types.UpdateNewMessage):
+                         new_msg_id = u.message.id
+                         break
+                     if isinstance(u, types.UpdateNewChannelMessage):
+                        new_msg_id = u.message.id
+                        break
+             
+             # Construct Link
+             msg_link = None
+             if new_msg_id:
+                 try:
+                    # Resolve to_peer again to check if it has username
+                    entity = await client.get_entity(to_peer)
+                    if hasattr(entity, 'username') and entity.username:
+                        msg_link = f"https://t.me/{entity.username}/{new_msg_id}"
+                    else:
+                        # Private channel/group link format: t.me/c/CHANNEL_ID_WITHOUT_PREFIX/MSG_ID
+                        clean_id = str(abs(target_chat_id)).replace("100", "", 1) if str(target_chat_id).startswith("-100") else abs(target_chat_id)
+                        msg_link = f"https://t.me/c/{clean_id}/{new_msg_id}"
+                 except Exception as link_err:
+                     logger.warning(f"Failed to generate link: {link_err}")
 
              logger.info("Forwarding successful.")
-             return True
+             return True, msg_link
              
         except (errors.RPCError, ValueError) as e:
             # Check for common forwarding restrictions or specific errors
