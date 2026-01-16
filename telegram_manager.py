@@ -410,24 +410,9 @@ class TelegramManager:
             ))
 
             if isinstance(invite, types.chatlists.ChatlistInviteAlready):
-                 logger.info("Account already joined this folder. Removing existing folder to replace it...")
-                 try:
-                     # JoinChatlistInviteRequest needs peers, and LeaveChatlistRequest does too.
-                     # already_peers are the ones currently in the folder for this user.
-                     await client(functions.chatlists.LeaveChatlistRequest(
-                         chatlist=types.InputChatlistSlug(slug=chatlist_hash),
-                         peers=invite.already_peers
-                     ))
-                     logger.info("Existing folder removed successfully.")
-                     
-                     # Now re-check to get a clean invite state
-                     invite = await client(functions.chatlists.CheckChatlistInviteRequest(
-                         slug=chatlist_hash
-                     ))
-                 except Exception as leave_err:
-                     logger.warning(f"Failed to remove existing folder: {leave_err}")
-                     # Return the actual error to help debugging
-                     return f"Already joined (Replacement failed: {str(leave_err)})"
+                 logger.info(f"Account already joined this folder. Attributes: {dir(invite)}")
+                 # Return attributes to help engineering
+                 return f"Debug: {dir(invite)}"
 
             # 2. Join the invite
             # We need to provide the peers that are in the folder
