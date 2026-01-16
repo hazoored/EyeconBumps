@@ -77,20 +77,20 @@ DEVICE_MODELS = [
 LOG_STRATEGY = {
     'Eyecon': {
         'token': '8237137634:AAFCcUxQorR3kP0bpZTlGFLSvrNBzq1bxAU',
-        'channel_id': 'REPLACE_WITH_CHANNEL_ID' 
+        'channel_id': '6926297956' 
     },
     'Khan': { # Assuming Khan uses Wizard logs? Or same as Wizard? Defaulting to Wizard for others.
         'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
-        'channel_id': 'REPLACE_WITH_CHANNEL_ID'
+        'channel_id': '6926297956'
     },
      'Hashim': {
         'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
-        'channel_id': 'REPLACE_WITH_CHANNEL_ID'
+        'channel_id': '6926297956'
     },
      # catch-all default
     'DEFAULT': {
         'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
-        'channel_id': 'REPLACE_WITH_CHANNEL_ID'
+        'channel_id': '6926297956'
     }
 }
 
