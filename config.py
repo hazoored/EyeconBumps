@@ -21,7 +21,7 @@ TELEGRAM_PROXY = None
 
 # Telegram Admin Session (The account that talks to BotFather)
 # This can be a session string or a path to a session file
-ADMIN_SESSION_STRING = os.getenv('ADMIN_SESSION_STRING', '1BJWap1wBu2rvaMLoyM_27h8dHi3z4U2aun3fWZOrPvsINz6V5aqnvph_1CwSEfwoyleX6SYr_thpITpJOOcCr9h-gny1V8abpAjcFwFf82y_hO3qASs_633xRTDqzw4hjiEgIiwcY2LN3ezTF_CWuyPgsZU5QfBZBg7koiZPRcNUi-1nPL7OOsp9oNW650LviwprGZ7IzLnJnXqTB5Xctr4vlo5uda0uNNPW0bqVKDmm8HCvmPT2QhZH8l1gO-pdoUXa9ELEi81t6rH4HXD1C-iW7lvFli3R7EqZzTa27IBavrCIiJUGaYEJsULVI9ET45jc4qvu8WAvdbfAqoggcHFGdSx5HBM=')
+ADMIN_SESSION_STRING = os.getenv('ADMIN_SESSION_STRING', '1BJWap1wBuzWdQTQxKjjM1zLZ5r_BaL2RNumTbBnjhAfd3mqKyPdzRVJtpfT7tPI00LITBJYCQ_WpbhwEr2iWtKXRgpc0Mqe1InWF_mLDY72xoZLr_qqUxerB2MPmIZqDtFNNmV4t75LmyUA45FhDuzelawFVaJMifOBRFBxgddiGsV38dDcNSRcJoGuG82dSSyIVicnN8_0dnSSsVtSrBZVBAQtTPYuaFaieF9QMOmIPeQJrcdDrPnM4PJ0j8FDdpOXYdg1trKYYsLbXIhS0hWPzdE7YehdDwBUZr8QneuzJHJ9__Ll1Lv74kj5s1I641TJ5Hlr6BhnkxURwqCyZAyLNIVOxCrg=')
 
 # Database config - Use absolute path to ensure persistence across restarts
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -85,21 +85,21 @@ LOG_STRATEGY = {
         'channel_id': '6926297956' 
     },
     'Khan': {
-        'token': 'REPLACE_WITH_KHAN_BOT_TOKEN', # <--- ENTER KHAN BOT TOKEN
+        'token': '8221090341:AAHkVpzI-npe0FDf22EYpmhvPrMwRKH0OqY', # <--- ENTER KHAN BOT TOKEN
         'channel_id': '6926297956'
     },
      'Hashim': {
-        'token': 'REPLACE_WITH_HASHIM_BOT_TOKEN', # <--- ENTER HASHIM BOT TOKEN
-        'channel_id': '6926297956'
+        'token': '7745783676:AAEQAV5ytzp6C0WZDn1CpN1Ffyc39UrHr2s', # <--- ENTER HASHIM BOT TOKEN
+        'channel_id': ['6926297956', '7012601869']
     },
     'Wizard': {
         'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
-        'channel_id': ''
+        'channel_id': ['6926297956', '5521050348']
     },
      # catch-all default
     'DEFAULT': {
-        'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto', # Default to Wizard
-        'channel_id': '6926297956'
+        'token': '', # Default to Wizard
+        'channel_id': ''
     }
 }
 
