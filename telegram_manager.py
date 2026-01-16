@@ -50,7 +50,17 @@ class TelegramManager:
                 TELEGRAM_API_HASH,
                 **client_kwargs
             )
-            logger.info(f"Using provided ADMIN_SESSION_STRING (Length: {len(ADMIN_SESSION_STRING)})")
+            logger.info(f"Using provided ADMIN_SESSION_STRING (Length: {len(str(ADMIN_SESSION_STRING))})")
+            
+            # --- FORCE CLEANUP ---
+            # If we are using StringSession, ensure no file-based session exists to confuse things
+            if os.path.exists('admin_session.session'):
+                try:
+                    os.remove('admin_session.session')
+                    logger.warning("Deleted stale 'admin_session.session' file to prevent conflicts.")
+                except Exception as e:
+                    logger.warning(f"Failed to delete stale session file: {e}")
+
         else:
             self.client = TelegramClient(
                 'admin_session', 
