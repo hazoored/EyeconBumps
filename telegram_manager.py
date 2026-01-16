@@ -196,7 +196,7 @@ class TelegramManager:
         client = await self.get_user_client(session_string)
         if not client:
              logger.error("Client not initialized")
-             return False
+             return False, None
         
         if session_string:
             logger.debug("Using user-provided session string.")
@@ -315,24 +315,24 @@ class TelegramManager:
                     logger.warning(f"Wait time too long ({e.seconds}s). Skipping group {target_chat_id}.")
                 else:
                     logger.warning(f"Skipping group {target_chat_id} due to rate limit.")
-                return False
+                return False, None
             
             elif isinstance(e, errors.SlowModeWaitError):
                 logger.warning(f"Group {target_chat_id} is in Slow Mode. Wait required: {e.seconds}s. Skipping group.")
-                return False
+                return False, None
             
             elif isinstance(e, errors.UserBannedInChannelError):
                 logger.warning(f"User is BANNED in group {target_chat_id}. Skipping group.")
-                return False
+                return False, None
 
             elif isinstance(e, errors.ChatWriteForbiddenError) or "You can't write in this chat" in str(e):
                  logger.warning(f"Forwarding failed to {target_chat_id}: Write access forbidden. Skipping group.")
-                 return False
+                 return False, None
 
             else:
                 if "Could not find the input entity" in str(e):
                     logger.warning(f"Skipping group {target_chat_id}: User not member or entity not found.")
-                    return False
+                    return False, None
                 else:
                     logger.error(f"Forwarding error: {e}")
                     # For other unknown RPC errors, we might want to log but not crash the whole loop?

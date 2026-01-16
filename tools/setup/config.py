@@ -71,6 +71,29 @@ DEVICE_MODELS = [
     {'device_model': 'OnePlus 11', 'system_version': 'Android 14', 'app_version': '10.0.0', 'lang_code': 'en', 'system_lang_code': 'en-US'},
 ]
 
+# Rich Log Bot Configuration
+# Maps Campaign Group Names -> (Bot Token, Log Channel ID)
+# IMPORTANT: Replace 'REPLACE_WITH_CHANNEL_ID' with the actual destination channel ID (e.g., -10012345678)
+LOG_STRATEGY = {
+    'Eyecon': {
+        'token': '8237137634:AAFCcUxQorR3kP0bpZTlGFLSvrNBzq1bxAU',
+        'channel_id': 'REPLACE_WITH_CHANNEL_ID' 
+    },
+    'Khan': { # Assuming Khan uses Wizard logs? Or same as Wizard? Defaulting to Wizard for others.
+        'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
+        'channel_id': 'REPLACE_WITH_CHANNEL_ID'
+    },
+     'Hashim': {
+        'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
+        'channel_id': 'REPLACE_WITH_CHANNEL_ID'
+    },
+     # catch-all default
+    'DEFAULT': {
+        'token': '8504440953:AAH0XiZ2t0Ze9GxIor-9-9f9kxVwux7ybto',
+        'channel_id': 'REPLACE_WITH_CHANNEL_ID'
+    }
+}
+
 OTHER = "Other"
 
 # Aliases for input normalization (Lowercase keys)

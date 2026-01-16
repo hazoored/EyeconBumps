@@ -1,10 +1,12 @@
 import asyncio
 import random
+import aiohttp
+import json
 from config import (
     GROUPS_CONFIG, ALIASES, OTHER, 
     AD_FORWARD_DELAY_MIN, AD_FORWARD_DELAY_MAX, 
     AD_SKIP_DELAY_MIN, AD_SKIP_DELAY_MAX,
-    CAMPAIGN_STAGGER_DELAY
+    CAMPAIGN_STAGGER_DELAY, LOG_STRATEGY
 )
 from database import get_active_campaigns, update_campaign_status, update_campaign_last_run
 import datetime
@@ -17,6 +19,63 @@ class AdRunner:
         self._task = None
         self.tg_manager = telegram_manager
         self.discord_client = discord_client
+        self.http_session = None # For log bots
+
+    async def get_http_session(self):
+        if self.http_session is None or self.http_session.closed:
+            self.http_session = aiohttp.ClientSession()
+        return self.http_session
+
+    async def send_rich_log(self, campaign_group, account_name, target_group_name, target_link, ad_preview):
+        """
+        Sends a rich log message to the configured Log Bot for the campaign group.
+        """
+        # 1. Determine Strategy
+        strategy = LOG_STRATEGY.get(campaign_group, LOG_STRATEGY.get('DEFAULT'))
+        if not strategy or strategy['channel_id'] == 'REPLACE_WITH_CHANNEL_ID':
+            return # Logging disabled or not configured
+
+        bot_token = strategy['token']
+        channel_id = strategy['channel_id']
+
+        # 2. Construct Payload
+        # Format:
+        # Forwarded from [Bot Name]
+        # ✅ Successfully forwarded to: [Target Group]
+        # [Card with Content]
+        # [View Message Button]
+        
+        # We need to escape Markdown properly if used, or use HTML. Using HTML for safety.
+        # Minimal data for the card.
+        
+        text = (
+            f"✅ <b>Successfully forwarded to:</b> {target_group_name}\n"
+            f"<b>Account:</b> {account_name}\n\n"
+            f"<i>{ad_preview[:100]}...</i>" # Preview of the ad content
+        )
+
+        payload = {
+            "chat_id": channel_id,
+            "text": text,
+            "parse_mode": "HTML",
+            "disable_web_page_preview": True,
+            "reply_markup": {
+                "inline_keyboard": [[
+                    {"text": "VIEW MESSAGE", "url": target_link}
+                ]]
+            }
+        }
+
+        # 3. Send Request
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        try:
+            session = await self.get_http_session()
+            async with session.post(url, json=payload) as resp:
+                if resp.status != 200:
+                    err_text = await resp.text()
+                    logger.warning(f"Failed to send rich log: {resp.status} - {err_text}")
+        except Exception as e:
+            logger.error(f"Error sending rich log: {e}")
 
     async def start(self):
         self.running = True
@@ -249,7 +308,7 @@ class AdRunner:
                     logger.info(f"Match found! Group {group_id} -> '{used_topic_name}' (ID: {target_topic_id})")
 
                     try:
-                        success = await self.tg_manager.forward_message(
+                        success, message_link = await self.tg_manager.forward_message(
                             target_chat_id=group_id,
                             target_topic_id=target_topic_id,
                             source_chat_id=source_chat_id,
@@ -260,6 +319,22 @@ class AdRunner:
                         if success:
                             logger.info(f"Forwarded ad {campaign['name']} to {group_id} topic {target_topic_id}")
                             
+                            # --- RICH LOGGING ---
+                            # Fire and forget logging
+                            if message_link:
+                                # Get a preview text (we don't have the message text easily here without fetching, 
+                                # but we can just say 'New Ad' or pass the campaign name)
+                                asyncio.create_task(
+                                    self.send_rich_log(
+                                        campaign_group=campaign_group,
+                                        account_name=campaign['name'],
+                                        target_group_name=str(group_id), # We could try to resolve name if needed
+                                        target_link=message_link,
+                                        ad_preview=f"Ad Campaign: {campaign['name']}"
+                                    )
+                                )
+                            # --------------------
+
                             # Randomized delay config
                             sleep_time = random.randint(AD_FORWARD_DELAY_MIN, AD_FORWARD_DELAY_MAX)
                             logger.info(f"Waiting {sleep_time} seconds before next group...")
