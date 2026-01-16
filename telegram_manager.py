@@ -43,8 +43,8 @@ class TelegramManager:
         # We try to use the session string if available, otherwise file based.
         # This client represents the ADMIN/DEFAULT account.
         if ADMIN_SESSION_STRING:
-             session = StringSession(ADMIN_SESSION_STRING)
-             self.client = TelegramClient(
+            session = StringSession(ADMIN_SESSION_STRING)
+            self.client = TelegramClient(
                 session,
                 TELEGRAM_API_ID, 
                 TELEGRAM_API_HASH,
