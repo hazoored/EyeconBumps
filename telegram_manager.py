@@ -50,6 +50,7 @@ class TelegramManager:
                 TELEGRAM_API_HASH,
                 **client_kwargs
             )
+            logger.info(f"Using provided ADMIN_SESSION_STRING (Length: {len(ADMIN_SESSION_STRING)})")
         else:
             self.client = TelegramClient(
                 'admin_session', 
