@@ -58,6 +58,28 @@ async def on_ready():
         logger.info('Slash commands synced globally')
 
     await tg_manager.start()
+
+@tree.command(name="sync", description="Force sync slash commands to Discord.")
+async def sync_commands(interaction: discord.Interaction):
+    if interaction.user.id != 6926297956 and interaction.user.id != int(os.getenv('DISCORD_OWNER_ID', 0)):
+        if not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message("❌ Access Denied.", ephemeral=True)
+            return
+
+    await interaction.response.defer(ephemeral=True)
+    try:
+        if DISCORD_GUILD_ID:
+            guild = discord.Object(id=DISCORD_GUILD_ID)
+            tree.copy_global_to(guild=guild)
+            synced = await tree.sync(guild=guild)
+        else:
+            synced = await tree.sync()
+        
+        await interaction.followup.send(f"✅ Successfully synced {len(synced)} commands.")
+        logger.info(f"Manual sync: {len(synced)} commands synced.")
+    except Exception as e:
+        await interaction.followup.send(f"❌ Sync failed: {e}")
+        logger.error(f"Manual sync failed: {e}")
     await ad_runner.start()
 
     logger.info(f'Logged in as {client.user} (ID: {client.user.id})')
