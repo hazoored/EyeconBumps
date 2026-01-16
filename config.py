@@ -211,7 +211,7 @@ GROUPS_CONFIG = {
     -1001624196878: {
         "P2P арбитраж": 936,
         "Поиск новых проектов": 513,
-        "General": 1,
+        "Instagram": 1,
         "ICO/IDO": 514,
         "NFT": 517,
         "Обсуждение рынка": 512,
@@ -299,7 +299,7 @@ GROUPS_CONFIG = {
         "CHATS": 30,
     },
     -1001940074224: {
-        "General Chat": 1,
+        "Instagram": 1,
         "Sellers Bay": 57,
         "Buyers Community": 18,
         "Buyer's Bay": 38,
@@ -433,7 +433,7 @@ GROUPS_CONFIG = {
     },
     -1001876591816: None, # Simple Group
     -1001741213429: {
-        "Other's": 13748,
+        "Instagram": 13748,
         "Headscarves & Inner": 13731,
         "Muslimah Fashion": 13701,
         "Skin & Personal Care": 13697,
@@ -531,7 +531,7 @@ GROUPS_CONFIG = {
     -1002387132758: {
         "Rainbet.com": 1588010,
         "YouTube": 10,
-        "Other Services": 24,
+        "Instagram": 24,
         "Exchanges": 16,
         "Discord": 18,
         "Other Accounts": 109,
